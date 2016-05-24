@@ -6,13 +6,19 @@ define(['text!../dust/item.html'], function (template) {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var jsonObj = JSON.parse(xhr.responseText);
                     dust.renderSource(template, jsonObj, function (err, out) {
+
                         document.getElementById('bodyRight').innerHTML = out;
-                        var link = document.getElementsByClassName('togle-link');
-                        console.log(link);
-                        // link.onclick = function () {
-                        //     var linkedTable = document.getElementsByClassName(link.getAttribute('data-table'));
-                        //     console.log(linkedTable)
-                        // }
+
+                        var links = document.getElementsByClassName('togle-link');
+
+                        Array.prototype.forEach.call(links, function(link) {
+                            link.addEventListener('click', function () {
+                                var table = document.getElementsByClassName(link.getAttribute('data-table'));
+                                Array.prototype.forEach.call(links, function(tb) {
+                                    console.log(tb.getAttribute('display'));
+                                })
+                            }, false);
+                        })
                     });
                 }
             };
